@@ -1,0 +1,9 @@
+.container{
+    width:50vw;
+    position: absolute;
+    top: 2.6rem;
+    right: 0;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--bg-color);
+}

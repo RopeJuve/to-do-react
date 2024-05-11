@@ -1,0 +1,13 @@
+.container{
+    padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--input-border);
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--heading-color);
+        background-color: transparent;
+
+        &::placeholder{
+            color: var(--input-border);
+        }
+}

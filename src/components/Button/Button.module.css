@@ -1,0 +1,44 @@
+.container{
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 1.5rem;  
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.primary{
+    background-color: var(--accent-color);
+    color: var(--heading-color);
+}
+
+.primary:disabled{
+    opacity: 0.5;
+}
+
+.primary:hover{
+    background-color: var(--hover-primary);
+}
+
+.secondary{
+    background-color: var(--heading-color);
+    color: var(--accent-color);
+}
+
+.menuButton{
+    padding: 0.5rem;
+    color:var(--p-color) !important;
+    font-weight: 400;
+    background-color: transparent;
+    color: var(--heading-color);
+}
+
+.deleteButton{
+    padding: 0.5rem;
+    background-color: transparent;
+    font-weight: 400;
+    color: var(--secondary-color);
+}
