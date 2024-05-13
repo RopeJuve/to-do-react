@@ -1,9 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import boardRouter from './routes/boardRouts.js';
 
 const app = express();
 
 app.use(express.json());
+
+app.use('/api/boards', boardRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World');

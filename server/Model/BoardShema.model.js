@@ -39,9 +39,9 @@ const todoBoardSchema = new Schema({
         required: true
     },
     columns: {
-        todo: [taskSchema],
-        inProgress: [taskSchema],
-        done: [taskSchema]
+        todo: { type: [taskSchema], default: [] },
+        inProgress: { type: [taskSchema], default: [] },
+        done: { type: [taskSchema], default: [] }
     }
 },
     {
