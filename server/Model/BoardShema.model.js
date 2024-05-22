@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-// Define the schema for subtasks
+
 const subtaskSchema = new Schema({
     subtaskDescription: {
         type: String,
@@ -16,7 +16,7 @@ const subtaskSchema = new Schema({
         timestamps: true
     });
 
-// Define the schema for tasks
+
 const taskSchema = new Schema({
     taskDescription: {
         type: String,
@@ -32,7 +32,7 @@ const taskSchema = new Schema({
         timestamps: true
     });
 
-// Define the schema for the TodoBoards
+
 const todoBoardSchema = new Schema({
     title: {
         type: String,

@@ -9,7 +9,7 @@ app.use(express.json());
 app.use('/api/boards', boardRouter);
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('To Do Kanban Board API');
 });
 
 
