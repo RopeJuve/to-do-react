@@ -1,11 +1,11 @@
 .container{
-    padding: 0.8rem 1rem;
+    padding: 0.9rem 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     border-radius: 1.5rem;  
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 700;
     transition: all 0.3s ease;
 }
@@ -13,15 +13,16 @@
 .primary{
     background-color: var(--accent-color);
     color: var(--heading-color);
+
+    &:hover{
+        background-color: var(--hover-primary);
+    }
+
+    &:disabled{
+        opacity: 0.5;
+    }
 }
 
-.primary:disabled{
-    opacity: 0.5;
-}
-
-.primary:hover{
-    background-color: var(--hover-primary);
-}
 
 .secondary{
     background-color: var(--heading-color);
@@ -35,6 +36,36 @@
     background-color: transparent;
     color: var(--heading-color);
 }
+
+.aside{
+    justify-content: flex-start;
+    background-color: var(--accent-color);
+    color: var(--heading-color);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+
+    &:hover{
+        background-color: var(--hover-primary);
+    }
+}
+
+
+.createBoard{
+    justify-content: flex-start;
+    background-color: transparent;
+    color: var(--accent-color);
+}
+
+.inActive{
+    justify-content: flex-start;
+    background-color: transparent;
+    color: var(--p-color);
+  
+}
+
+
 
 .deleteButton{
     padding: 0.5rem;

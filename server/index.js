@@ -1,8 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import boardRouter from './routes/boardRouts.js';
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 

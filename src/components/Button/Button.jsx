@@ -6,9 +6,13 @@ const Button = ({ variant, children, ...props }) => {
         [styles.primary]: variant === "primary",
         [styles.secondary]: variant === "secondary",
         [styles.menuButton]: variant === "editButton",
-        [styles.deleteButton]: variant === "deleteButton"
+        [styles.deleteButton]: variant === "deleteButton",
+        [styles.aside]: variant === "aside",
+        [styles.createBoard]: variant === "createBoard",
+        [styles.inActive]: variant === "inActive",
 
     });
+
     return (
         <button className={btnClasses} {...props}>{children}</button>
     )

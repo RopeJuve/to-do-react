@@ -18,6 +18,7 @@ const NavBar = ({ title, data }) => {
         <nav className={styles.container}>
             <div className={styles.logoWrapper}>
                 <img src={Logo} alt="logo" />
+                <h1>Kanban</h1>
             </div>
             <div className={styles.rightSide}>
                 <div className={styles.headWrapper}>

@@ -9,3 +9,11 @@
     align-items: center;
     gap: 1.5rem;
 }
+
+@media screen and (min-width: 768px) {
+    .emptyContainer {
+        width: calc(100% - 300px);
+        margin-left: auto;
+    }
+    
+}
