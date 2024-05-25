@@ -16,6 +16,24 @@ const BoardPage = () => {
 
         const getBoards = async () => {
             try {
+                const response = await fetch(`http://localhost:3000/api/boards/`);
+                const data = await response.json();
+                setBoard(data[0]);
+
+                setTitle(data[0].title);
+            } catch (error) {
+                console.error(error);
+                setStatus('error');
+            }
+        }
+        getBoards();
+    }, []);
+
+
+    useEffect(() => {
+
+        const getBoards = async () => {
+            try {
                 const response = await fetch(`http://localhost:3000/api/boards/${id}`);
                 const data = await response.json();
                 setBoard(data);
@@ -28,7 +46,6 @@ const BoardPage = () => {
         }
         getBoards();
     }, [id]);
-
     return (
         <>
             {!!board && <><NavBar title={title} data={board} /><SideBar selected={board} /><ToDoBoard board={board} /></>}

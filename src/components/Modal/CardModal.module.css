@@ -1,0 +1,114 @@
+.cardModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContent {
+    background: #2B2C37;
+    padding: 1.5rem;
+    width: 343px;
+    color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modalTitle {
+    font-size: 1.325rem;
+    font-weight: 600;
+  }
+  
+  .headerContainer {
+    position: relative;
+    height: 100%;
+    width: 20px;
+  }
+  
+  .menu {
+    cursor: pointer;
+  }
+  
+  .menuContent {
+    position: absolute;
+    z-index: 10;
+    top: 2rem;
+    right: -1rem;
+    background: #20212C;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .menuContent button {
+    color: white;
+    text-align: left;
+    transition: all 500ms;
+  }
+  
+  .menuContent button:hover {
+    color: #635FC7;
+  }
+  
+  .subtaskContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .subtasks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .subtask {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem;
+    background: #20212C;
+    border-radius: 0.5rem;
+    transition: background 500ms;
+  }
+  
+  .subtask:hover {
+    background: #635FC7;
+  }
+  
+  .checkbox {
+    border: 1px solid rgba(130, 143, 163, 0.25);
+    background: #2B2C37;
+    border-radius: 0.25rem;
+    color: #635FC7;
+  }
+  
+  .completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+  
+  .statusContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .status {
+    padding: 0.5rem;
+    border: 1px solid #828FA3;
+    border-radius: 0.5rem;
+  }
+  
