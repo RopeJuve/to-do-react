@@ -7,3 +7,10 @@
     border-radius: 0.5rem;
     background-color: var(--bg-color);
 }
+
+@media screen and (min-width: 768px){
+    .container{
+        width: 20vw;
+    }
+    
+}

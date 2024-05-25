@@ -7,6 +7,7 @@ import Column from '../Column/Column'
 
 const ToDoBoard = ({ board }) => {
     const [openModal, setOpenModal] = useState(false);
+    console.log(board)
 
     return (
         <>

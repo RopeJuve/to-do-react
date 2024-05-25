@@ -10,6 +10,7 @@ import MenuModal from '../MenuModal/MenuModal'
 import Modal from '../Modal/Modal'
 
 
+
 const NavBar = ({ title, data }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,7 +34,7 @@ const NavBar = ({ title, data }) => {
                     <Button onClick={() => setIsMenuOpen(!isMenuOpen)} variant='editButton' disabled={disabled} >
                         <img className={styles.cursorPointerMenu} src={menu} alt="menu" />
                     </Button>
-                    {isMenuOpen && <MenuModal remove={setIsMenuOpen} />}
+                    {isMenuOpen && <MenuModal remove={setIsMenuOpen}  />}
                 </div>
             </div>
             {isModalOpen && <Modal remove={() => setIsModalOpen(false)} />}
