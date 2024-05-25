@@ -1,0 +1,28 @@
+.card {
+    padding: 1rem;
+    padding-top: 1.5rem;
+    cursor: grab;
+    background-color: #2B2C37;
+    border-radius: 0.5rem;
+    transition: background-color 300ms ease-in-out;
+  }
+  
+  .card:hover {
+    background-color: #3A3B4A;
+  }
+  
+  .cardTittle {
+    color: white;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    pointer-events: none;
+  }
+  
+  .cardSubtasks {
+    color: white;
+    opacity: 0.5;
+    font-size: 0.875rem;
+    pointer-events: none;
+  }
+  

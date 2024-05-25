@@ -15,7 +15,6 @@ export const getTasks = async (req, res) => {
 
 export const getTask = async (req, res) => {
     const { boardID, columnID, id } = req.params;
-    console.log(id);
     try {
         const boards = await TodoBoard.find();
         const board = boards.find(board => board._id.toString() === boardID.toString());

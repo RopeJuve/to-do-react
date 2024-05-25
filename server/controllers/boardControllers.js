@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {TodoBoard} from "../Model/BoardSchema.model.js";
+import { TodoBoard } from "../Model/BoardSchema.model.js";
 
 export const getBoards = async (req, res) => {
   try {
@@ -14,7 +14,6 @@ export const getBoard = async (req, res) => {
   const { id } = req.params;
   try {
     const board = await TodoBoard.findById(id).lean();
-    console.log(board)
     res.status(200).json(board);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -34,10 +33,10 @@ export const createBoard = async (req, res) => {
 
 export const updateBoard = async (req, res) => {
   const { id } = req.params;
-  const { title , columns } = req.body;
+  const { title, columns } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No board with id: ${id}`);
-  const updatedBoard = { title , columns};
+  const updatedBoard = { title, columns };
   await TodoBoard.findByIdAndUpdate(id, updatedBoard, { new: true });
   res.json(updatedBoard);
 };

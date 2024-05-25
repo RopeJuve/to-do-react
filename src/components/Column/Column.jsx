@@ -1,3 +1,4 @@
+import Card from '../Card/Card';
 import styles from './Column.module.css'
 
 const Column = ({ column }) => {
@@ -15,9 +16,7 @@ const Column = ({ column }) => {
             </div>
             <div className={styles.taskWrapper}>
                 {tasks.map((task) => (
-                    <div key={task._id} className={styles.task}>
-                        <p>{task.title}</p>
-                    </div>
+                    <Card key={task._id} task={task} />
                 ))}
             </div>
         </div>
