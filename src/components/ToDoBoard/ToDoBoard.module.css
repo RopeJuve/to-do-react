@@ -1,5 +1,5 @@
 .emptyContainer {
-    text-align  : center;
+    text-align: center;
     width: 100%;
     height: 100vh;
     display: flex;
@@ -10,10 +10,22 @@
     gap: 1.5rem;
 }
 
+.columnContainer {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
 @media screen and (min-width: 768px) {
     .emptyContainer {
         width: calc(100% - 300px);
         margin-left: auto;
     }
-    
+
+    .columnContainer {
+        width: calc(100% - 300px);
+        margin-left: auto;
+    }
+
 }

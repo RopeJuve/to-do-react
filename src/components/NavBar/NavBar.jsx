@@ -28,6 +28,7 @@ const NavBar = ({ title, data }) => {
                 <div className={styles.buttonsWrapper}>
                     <Button onClick={() => setIsModalOpen(!isModalOpen)} variant="primary" disabled={disabled}>
                         <img src={addTaskIcon} alt="add task icon" />
+                        <span className={styles.btnText}>Add New Task</span>
                     </Button>
                     <Button onClick={() => setIsMenuOpen(!isMenuOpen)} variant='editButton' disabled={disabled} >
                         <img className={styles.cursorPointer} src={menu} alt="menu" />

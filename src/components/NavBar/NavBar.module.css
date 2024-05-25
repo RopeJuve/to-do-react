@@ -40,6 +40,10 @@
   cursor: pointer;
 }
 
+.btnText{
+  display: none;
+}
+
 @media screen and (min-width: 768px) {
   .logoWrapper {
     padding: 1rem 1.5rem;
@@ -56,5 +60,9 @@
       color: var(--heading-color);
 
     }
+  }
+
+  .btnText{
+    display: block;
   }
 }

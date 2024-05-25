@@ -32,17 +32,23 @@ const taskSchema = new Schema({
         timestamps: true
     });
 
+const columnSchema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    tasks: { type: [taskSchema], default: [] }
+},
+    {
+        timestamps: true
+    });
 
 const todoBoardSchema = new Schema({
     title: {
         type: String,
         required: true
     },
-    columns: {
-        todo: { type: [taskSchema], default: [] },
-        inProgress: { type: [taskSchema], default: [] },
-        done: { type: [taskSchema], default: [] }
-    }
+    columns: [columnSchema]
 },
     {
         timestamps: true

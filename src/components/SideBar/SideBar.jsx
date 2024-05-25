@@ -1,16 +1,46 @@
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../Button/Button'
 import ThemeContainer from '../ThemeContainer/ThemeContainer'
 import styles from './SideBar.module.css'
 
-const SideBar = ({ boards, selected, setSelectedBoard }) => {
+const SideBar = ({ selected }) => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [boards, setBoards] = useState([]);
+  const [selectedBoard, setSelectedBoard] = useState(selected);
+
+
+
+  useEffect(() => {
+
+    const getBoards = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/boards');
+        const data = await response.json();
+        setBoards(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getBoards();
+  }, []);
+
+
+
+  const handleClick = (index, id) => {
+    navigate(`/boards/${id}`);
+    setSelectedBoard(boards[index]);
+  }
   return (
     <aside className={styles.container}>
       <div className={styles.top}>
         <h4> all boards ({boards.length})</h4>
-        {boards.map((board, index) => {
+        {boards?.map((board, index) => {
           return (
-            selected.title === board.title ? (
-              <Button key={board._id} variant="aside" onClick={() => setSelectedBoard(index)}>
+            selectedBoard?.title === board.title ? (
+              <Button key={board._id} variant="aside" onClick={() => handleClick(index, board._id)}>
                 <svg
                   className={styles.icon}
                   width="16"
@@ -25,7 +55,7 @@ const SideBar = ({ boards, selected, setSelectedBoard }) => {
                 {board.title}
               </Button>
             ) : (
-              <Button key={board._id} variant="inActive" onClick={() => setSelectedBoard(index)} >
+              <Button key={board._id} variant="inActive" onClick={() => handleClick(index, board._id)} >
                 <svg
                   className={styles.iconInActive}
                   width="16"
