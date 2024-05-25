@@ -39,7 +39,9 @@
 .cursorPointer {
   cursor: pointer;
 }
-
+.cursorPointerMenu {
+  cursor: pointer;
+}
 .btnText{
   display: none;
 }
@@ -64,5 +66,9 @@
 
   .btnText{
     display: block;
+  }
+
+  .cursorPointer{
+    display: none;
   }
 }

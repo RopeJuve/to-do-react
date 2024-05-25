@@ -1,24 +1,78 @@
 import styles from "./AddBoardModal.module.css"
 import Button from "../Button/Button"
 import Input from "../Input/Input"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
-const AddBoardModal = () => {
+const AddBoardModal = ({ remove }) => {
+    const navigate = useNavigate();
+    const [error, setError] = useState(false);
+    const [formData, setFormData] = useState({
+        title: '',
+        columns: [
+            { title: 'To Do', tasks: [] },
+            { title: 'In Progress', tasks: [] },
+            { title: 'Done', tasks: [] }
+        ]
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+    }
+
+    const handleColumnChange = (e, index) => {
+        const { value } = e.target;
+        const columns = [...formData.columns];
+        columns[index].title = value;
+        setFormData({
+            ...formData,
+            columns
+        })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!formData.title) {
+            setError(true);
+            return;
+        } else {
+            setError(false);
+            const response = await fetch('http://localhost:3000/api/boards', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await response.json();
+            console.log(data);
+            navigate(`/boards/${data._id}`);
+            remove();
+            return data;
+        }
+    }
+
+
     return (
-        <div className={styles.container}>
+        <form className={styles.container} onSubmit={handleSubmit}>
             <h2>Add New Board</h2>
             <div className={styles.addBoardTitleWrapper}>
-                <label htmlFor="board-title">Board Name</label>
-                <Input name="board-title" type="text" placeholder="Enter board title" />
+                <label htmlFor="title">Board Name</label>
+                <Input name="title" type="text" placeholder="Enter board title" onChange={handleChange} error={error} />
             </div>
             <div className={styles.addBoardTitleWrapper}>
-                <label htmlFor="board-title">Board Columns</label>
-                <Input name="board-title" type="text" placeholder="Enter board title" value='Todo' />
-                <Input name="board-title" type="text" placeholder="Enter board title" value='Progress' />
-                <Input name="board-title" type="text" placeholder="Enter board title" value='Done' />
+                <label htmlFor="column">Board Columns</label>
+                {formData.columns.map((column, index) => (
+                    <Input key={`column-name-${index}`} name="column" type="text" placeholder="Enter column title" value={column.title} onChange={(e) => handleColumnChange(e, index)} />
+                ))}
             </div>
             <Button variant='primary'>Create Board</Button>
-        </div>
+        </form>
     )
 }
 

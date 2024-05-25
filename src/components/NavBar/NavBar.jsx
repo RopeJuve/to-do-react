@@ -31,7 +31,7 @@ const NavBar = ({ title, data }) => {
                         <span className={styles.btnText}>Add New Task</span>
                     </Button>
                     <Button onClick={() => setIsMenuOpen(!isMenuOpen)} variant='editButton' disabled={disabled} >
-                        <img className={styles.cursorPointer} src={menu} alt="menu" />
+                        <img className={styles.cursorPointerMenu} src={menu} alt="menu" />
                     </Button>
                     {isMenuOpen && <MenuModal remove={setIsMenuOpen} />}
                 </div>

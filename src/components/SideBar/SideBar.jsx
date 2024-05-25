@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../Button/Button'
 import ThemeContainer from '../ThemeContainer/ThemeContainer'
 import styles from './SideBar.module.css'
+import Modal from '../Modal/Modal';
 
 const SideBar = ({ selected }) => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const SideBar = ({ selected }) => {
 
   const [boards, setBoards] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState(selected);
+  const [openModal, setOpenModal] = useState(false);
 
 
 
@@ -27,6 +29,19 @@ const SideBar = ({ selected }) => {
     getBoards();
   }, []);
 
+  useEffect(() => {
+
+    const getBoards = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/boards');
+        const data = await response.json();
+        setBoards(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getBoards();
+  }, [id]);
 
 
   const handleClick = (index, id) => {
@@ -73,7 +88,7 @@ const SideBar = ({ selected }) => {
           )
         }
         )}
-        <Button variant="createBoard">
+        <Button variant="createBoard" onClick={() => setOpenModal(true)}>
           <svg
             className={styles.createBoardIcon}
             width="16"
@@ -98,6 +113,7 @@ const SideBar = ({ selected }) => {
           Hide Sidebar
         </Button>
       </div>
+      {openModal && <Modal variant="addBoard" remove={() => setOpenModal(false)} />}
     </aside>
   )
 }

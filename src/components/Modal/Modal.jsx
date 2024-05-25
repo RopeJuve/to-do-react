@@ -9,7 +9,7 @@ const Modal = ({ remove, variant }) => {
     return (
         <div className={styles.container} onClick={remove}>
             <div className={styles.modal} onClick={handleModalClick}>
-                {variant === 'addBoard' && <AddBoardModal />}
+                {variant === 'addBoard' && <AddBoardModal remove={remove}/>}
             </div>
         </div>
     )
