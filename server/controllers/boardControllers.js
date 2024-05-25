@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import TodoBoard from "../Model/BoardShema.model.js";
+import {TodoBoard} from "../Model/BoardSchema.model.js";
 
 export const getBoards = async (req, res) => {
   try {
@@ -14,6 +14,7 @@ export const getBoard = async (req, res) => {
   const { id } = req.params;
   try {
     const board = await TodoBoard.findById(id).lean();
+    console.log(board)
     res.status(200).json(board);
   } catch (error) {
     res.status(404).json({ message: error.message });

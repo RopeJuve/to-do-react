@@ -18,6 +18,10 @@ const subtaskSchema = new Schema({
 
 
 const taskSchema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
     taskDescription: {
         type: String,
         required: true
@@ -26,7 +30,12 @@ const taskSchema = new Schema({
         type: Boolean,
         default: false
     },
-    subtasks: [subtaskSchema]
+    subtasks: [subtaskSchema],
+    status: {
+        type: String,
+        enum: ['To Do', 'In Progress', 'Done'],
+        default: 'To Do'
+    }
 },
     {
         timestamps: true
@@ -37,7 +46,7 @@ const columnSchema = new Schema({
         type: String,
         required: true
     },
-    tasks: { type: [taskSchema], default: [] }
+    tasks: { type: [taskSchema] }
 },
     {
         timestamps: true
@@ -55,5 +64,6 @@ const todoBoardSchema = new Schema({
     });
 
 const TodoBoard = mongoose.model('TodoBoard', todoBoardSchema);
+const Task = mongoose.model('Task', taskSchema);
 
-export default TodoBoard;
+export { TodoBoard, Task }
