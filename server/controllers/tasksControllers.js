@@ -69,6 +69,27 @@ export const updateTask = async (req, res) => {
     }
 }
 
+export const moveTask = async (req, res) => {
+    const { boardID, columnID, id } = req.params;
+    const { newColumnID } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(boardID)) {
+        return res.status(404).send(`No board with id: ${boardID}`);
+    }
+    try {
+        const boards = await TodoBoard.find();
+        const board = boards.find(board => board._id.toString() === boardID.toString());
+        const column = board.columns.find(col => col._id.toString() === columnID.toString());
+        const newColumn = board.columns.find(col => col._id.toString() === newColumnID.toString());
+        const taskToMove = column.tasks.find(task => task._id.toString() === id.toString());
+        column.tasks.pull(taskToMove);
+        newColumn.tasks.push(taskToMove);
+        await board.save();
+        res.status(200).json(taskToMove);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
 export const deleteTask = async (req, res) => {
     const { boardID, columnID, id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(boardID)) {
