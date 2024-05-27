@@ -3,10 +3,11 @@ import styles from './MenuModal.module.css'
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Modal from '../Modal/Modal'
-import { deleteBoard } from '../../services/deleteBoard.js'
+import { useBoard } from '../../context/BoardContext.jsx'
 
 const MenuModal = ({ remove }) => {
     const navigate = useNavigate();
+    const { removeBoard } = useBoard();
     const { id } = useParams();
     const [isOpenEdit, setIsOpenEdit] = useState(false);
 
@@ -16,7 +17,7 @@ const MenuModal = ({ remove }) => {
     }
 
     const handleDeleteBoard = async (id) => {
-        await deleteBoard(id);
+        await removeBoard(id);
         navigate('/')
         remove();
     }

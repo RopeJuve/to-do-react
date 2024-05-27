@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-import { useNavigate, useParams, Link, useLocation } from 'react-router-dom'
+import { useParams, Link, useLocation } from 'react-router-dom'
 import styles from './NavBar.module.css'
 import Logo from '../../assets/logo-mobile.svg'
 import Button from '../Button/Button'
@@ -14,10 +14,9 @@ import MenuModal from '../MenuModal/MenuModal'
 
 const NavBar = ({ title, data }) => {
     const location = useLocation();
-    const navigate = useNavigate();
     const { id } = useParams();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const disabled = !!data ? false : true;
+    const disabled = !data ? true : false;
     return (
         <nav className={styles.container}>
             <div className={styles.logoWrapper}>

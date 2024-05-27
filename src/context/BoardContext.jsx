@@ -17,10 +17,9 @@ export const BoardProvider = ({ children }) => {
             const response = await fetch('http://localhost:3000/api/boards');
             const data = await response.json();
             setBoards(data);
+            setLoading(false);
         } catch (err) {
             setError(err.message);
-        } finally {
-            setLoading(false);
         }
 
     };
@@ -42,16 +41,28 @@ export const BoardProvider = ({ children }) => {
         }
     }
 
+    const removeBoard = async (id) => {
+        try {
+            await fetch(`http://localhost:3000/api/boards/${id}`, {
+                method: 'DELETE'
+            });
+            setBoards((prevBoards) => prevBoards.filter(board => board._id !== id));
+        } catch (error) {
+            setError(err.message);
+        }
+    }
+
     const fetchBoard = async (boardId) => {
         setLoading(true);
         try {
             const response = await fetch(`http://localhost:3000/api/boards/${boardId}`);
             const data = await response.json();
             setBoard(data);
+            setLoading(false);
         } catch (err) {
             setError(err.message);
         } finally {
-            setLoading(false);
+         
         }
     };
 
@@ -145,7 +156,7 @@ export const BoardProvider = ({ children }) => {
 
     return (
         <BoardContext.Provider
-            value={{ boards, board, loading, error, setBoard, fetchBoards, fetchBoard, addBoard, addTask, updateTask, deleteTask }}
+            value={{ boards, board, loading, error,removeBoard, setBoard, fetchBoards, fetchBoard, addBoard, addTask, updateTask, deleteTask }}
         >
             {children}
         </BoardContext.Provider>
