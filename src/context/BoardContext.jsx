@@ -98,7 +98,7 @@ export const BoardProvider = ({ children }) => {
 
     const updateTask = async (boardId, columnId, taskId, updatedTask) => {
         try { ///column/:columnID/task/:id
-            await fetch(`http://localhost:3000/api/boards/${boardId}/column/${columnId}/task/${taskId}`, {
+            await fetch(`http://localhost:3000/api/boards/${boardId}/tasks/column/${columnId}/task/${taskId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updatedTask),
