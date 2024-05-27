@@ -42,12 +42,17 @@ p {
 }
 
 a,
-button,
-input {
+button {
   text-decoration: none;
   outline: none;
   border: none;
   cursor: pointer;
+}
+
+input{
+  text-decoration: none;
+  outline: none;
+  border: none;
 }
 
 ul,
