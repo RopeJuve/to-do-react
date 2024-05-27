@@ -4,7 +4,7 @@
   --bg-color: #20212C;
   --dark-gray: #2B2C37;
   --light-gray: #979797;
-  --input-border: rgb(130,143,163,25%);
+  --input-border: rgb(130, 143, 163, 25%);
   --accent-color: #635FC7;
   --secondary-color: #EA5555;
   --p-color: #828FA3;
@@ -28,21 +28,29 @@ body {
   height: 100vh;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--heading-color);
 }
 
-p{
+p {
   color: var(--p-color);
 }
 
-a,button,input {
+a,
+button,
+input {
   text-decoration: none;
   outline: none;
   border: none;
   cursor: pointer;
 }
 
-ul,li {
+ul,
+li {
   list-style: none;
 }

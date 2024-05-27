@@ -36,6 +36,7 @@ const SideBar = ({ selected }) => {
         const response = await fetch('http://localhost:3000/api/boards');
         const data = await response.json();
         setBoards(data);
+        setSelectedBoard(data.find(board => board._id === id));
       } catch (error) {
         console.error(error);
       }

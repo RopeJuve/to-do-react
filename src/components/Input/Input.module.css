@@ -1,20 +1,22 @@
-.container{
+.container {
     padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        border: 1px solid var(--input-border);
-        font-size: 1.2rem;
-        font-weight: 500;
-        color: var(--heading-color);
-        background-color: transparent;
+    border-radius: 0.5rem;
+    border: 1px solid var(--input-border);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--heading-color);
+    background-color: transparent;
 
-        &::placeholder{
-            color: var(--input-border);
-        }
+    &::placeholder {
+        font-size: .9rem;
+        color: var(--input-border);
+    }
 }
 
-.error{
+.error {
     border: 1px solid var(--secondary-color);
-    &::placeholder{
+
+    &::placeholder {
         color: var(--secondary-color);
     }
 }

@@ -3,10 +3,10 @@ import styles from './Card.module.css'
 import CardModal from '../Modal/CardModal';
 
 const Card = ({ task }) => {
-    const { title, _id, subTasks } = task;
+    const { title, _id, subtasks } = task;
     const [modalVisible, setModalVisible] = useState(false);
-
-    const completedSubTasks = subTasks  ? subTasks.filter((subTask) => subTask.isCompleted).length : 0;
+    console.log(subtasks)
+    const completedSubTasks = subtasks ? subtasks.filter((subTask) => subTask.isCompleted).length : 0;
 
     const handleDragStart = (e) => {
         e.dataTransfer.setData('text/plain', _id);
@@ -28,7 +28,7 @@ const Card = ({ task }) => {
                 onClick={() => setModalVisible(true)}
             >
                 <h2 className={styles.cardTittle}>{title}</h2>
-                <span className={styles.cardSubtasks}>{completedSubTasks} of {subTasks ? subTasks?.length : 0} subtasks</span>
+                <span className={styles.cardSubtasks}>{completedSubTasks} of {subtasks ? subtasks?.length : 0} subtasks</span>
                 {/* Assuming createDropZone() returns a React element */}
             </div>
             {modalVisible && <CardModal task={task} onClose={() => setModalVisible(false)} />}

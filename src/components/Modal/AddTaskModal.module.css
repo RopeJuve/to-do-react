@@ -1,0 +1,59 @@
+.container {
+    display: grid;
+    gap: 1.5rem;
+
+    & label,
+    span {
+        font-weight: 700;
+        color: var(--heading-color);
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.textArea {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--input-border);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--heading-color);
+    background-color: transparent;
+    resize: none;
+
+    &::placeholder {
+        font-size: .9rem;
+        color: var(--input-border);
+    }
+}
+
+.subtaskInput {
+    display: flex;
+    align-items: center;
+
+    &>input {
+        flex: 1;
+    }
+}
+
+.selectContainer {
+    outline: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--input-border);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--heading-color);
+    background-color: transparent;
+
+    &>option {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--heading-color);
+        background-color: var(--dark-gray);
+    }
+}

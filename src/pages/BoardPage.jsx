@@ -8,7 +8,6 @@ import ToDoBoard from "../components/ToDoBoard/ToDoBoard"
 const BoardPage = () => {
     const { id } = useParams();
     const [board, setBoard] = useState(null);
-
     const [title, setTitle] = useState('');
 
 
@@ -37,7 +36,6 @@ const BoardPage = () => {
                 const response = await fetch(`http://localhost:3000/api/boards/${id}`);
                 const data = await response.json();
                 setBoard(data);
-
                 setTitle(data.title);
             } catch (error) {
                 console.error(error);
@@ -45,10 +43,13 @@ const BoardPage = () => {
             }
         }
         getBoards();
-    }, [id]);
+    }, [id, title]);
     return (
         <>
-            {!!board && <><NavBar title={title} data={board} /><SideBar selected={board} /><ToDoBoard board={board} /></>}
+            {!!board && <>
+                <NavBar title={title} data={board} />
+                <SideBar selected={board} />
+                <ToDoBoard board={board} /></>}
         </>
     )
 }

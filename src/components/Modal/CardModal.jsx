@@ -5,11 +5,11 @@ import Button from '../Button/Button';
 
 
 const CardModal = ({ task, onClose }) => {
-    const { title, taskDescription, status, subTasks, _id } = task;
+    const { title, taskDescription, status, subtasks, _id } = task;
     console.log(task)
     const [menuVisible, setMenuVisible] = useState(false);
-    const completedSubTasks = subTasks ? subTasks.filter((subTask) => subTask.isCompleted).length : 0;
-    const numSubtasks = subTasks ? subTasks.length : 0;
+    const completedSubTasks = subtasks ? subtasks.filter((subTask) => subTask.isCompleted).length : 0;
+    const numSubtasks = subtasks ? subtasks.length : 0;
     const handleMenuToggle = () => {
         setMenuVisible(!menuVisible);
     };
@@ -50,7 +50,7 @@ const CardModal = ({ task, onClose }) => {
                 <div className={styles.subtaskContainer}>
                     <h6>Subtasks ({completedSubTasks} of {numSubtasks})</h6>
                     <div className={styles.subtasks}>
-                        {subTasks?.map((subtask) => (
+                        {subtasks?.map((subtask) => (
                             <div key={subtask._id} className={styles.subtask}>
                                 <input
                                     id={subtask._id}
@@ -59,7 +59,7 @@ const CardModal = ({ task, onClose }) => {
                                     checked={subtask?.isCompleted}
                                     onChange={(e) => handleCheckboxChange(e, subtask.id)}
                                 />
-                                <p className={subtask?.isCompleted ? styles.completed : ''}>{subtask.title}</p>
+                                <p className={subtask?.isCompleted ? styles.completed : ''}>{subtask.subtaskDescription}</p>
                             </div>
                         ))}
                     </div>

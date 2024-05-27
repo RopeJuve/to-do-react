@@ -53,7 +53,6 @@ const AddBoardModal = ({ remove }) => {
             console.log(data);
             navigate(`/boards/${data._id}`);
             remove();
-            return data;
         }
     }
 
