@@ -3,10 +3,12 @@ import Button from "../Button/Button"
 import Input from "../Input/Input"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useBoard } from "../../context/BoardContext";
 
 
 const AddBoardModal = ({ remove }) => {
     const navigate = useNavigate();
+    const { addBoard, setBoard } = useBoard();
     const [error, setError] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
@@ -42,15 +44,8 @@ const AddBoardModal = ({ remove }) => {
             return;
         } else {
             setError(false);
-            const response = await fetch('http://localhost:3000/api/boards', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await response.json();
-            console.log(data);
+            const data = await addBoard(formData);
+            setBoard(data);
             navigate(`/boards/${data._id}`);
             remove();
         }

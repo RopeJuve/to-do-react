@@ -1,62 +1,34 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../Button/Button'
 import ThemeContainer from '../ThemeContainer/ThemeContainer'
 import styles from './SideBar.module.css'
 import Modal from '../Modal/Modal';
+import { useBoard } from '../../context/BoardContext';
 
-const SideBar = ({ selected }) => {
+const SideBar = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-
-  const [boards, setBoards] = useState([]);
-  const [selectedBoard, setSelectedBoard] = useState(selected);
+  const { boards, fetchBoards, board, setBoard } = useBoard();
   const [openModal, setOpenModal] = useState(false);
 
 
-
   useEffect(() => {
-
-    const getBoards = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/boards');
-        const data = await response.json();
-        setBoards(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getBoards();
+    fetchBoards();
   }, []);
-
-  useEffect(() => {
-
-    const getBoards = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/boards');
-        const data = await response.json();
-        setBoards(data);
-        setSelectedBoard(data.find(board => board._id === id));
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getBoards();
-  }, [id]);
 
 
   const handleClick = (index, id) => {
     navigate(`/boards/${id}`);
-    setSelectedBoard(boards[index]);
+    setBoard(boards[index]);
   }
   return (
     <aside className={styles.container}>
       <div className={styles.top}>
-        <h4> all boards ({boards.length})</h4>
-        {boards?.map((board, index) => {
+        <h4> all boards ({boards?.length})</h4>
+        {boards?.map((item, index) => {
           return (
-            selectedBoard?.title === board.title ? (
-              <Button key={board._id} variant="aside" onClick={() => handleClick(index, board._id)}>
+            board.title === item.title ? (
+              <Button key={item._id} variant="aside" onClick={() => handleClick(index, item._id)}>
                 <svg
                   className={styles.icon}
                   width="16"
@@ -68,10 +40,10 @@ const SideBar = ({ selected }) => {
                     fill=""
                   />
                 </svg>
-                {board.title}
+                {item.title}
               </Button>
             ) : (
-              <Button key={board._id} variant="inActive" onClick={() => handleClick(index, board._id)} >
+              <Button key={item._id} variant="inActive" onClick={() => handleClick(index, item._id)} >
                 <svg
                   className={styles.iconInActive}
                   width="16"
@@ -83,7 +55,7 @@ const SideBar = ({ selected }) => {
                     fill=""
                   />
                 </svg>
-                {board.title}
+                {item.title}
               </Button>
             )
           )

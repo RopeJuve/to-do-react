@@ -4,6 +4,7 @@ import Button from "../Button/Button"
 import Input from "../Input/Input"
 import deleteInput from '../../assets/icon-cross.svg'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useBoard } from '../../context/BoardContext'
 
 const AddTaskModal = () => {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const AddTaskModal = () => {
         isCompleted: false,
         status: 'To Do'
     });
+    const { addTask } = useBoard();
     const handleInputChange = (e, index) => {
         const { name, value } = e.target;
         if (name === 'subtasks') {
@@ -33,15 +35,7 @@ const AddTaskModal = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData)
-        const response = await fetch(`http://localhost:3000/api/boards/${boardId}/tasks`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-        const data = await response.json();
-        console.log(data);
+        await addTask(boardId, formData);
         navigate(`/boards/${boardId}`);
     }
     return (
