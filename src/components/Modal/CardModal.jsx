@@ -2,11 +2,14 @@ import { useState } from 'react';
 import styles from './CardModal.module.css';
 import dots from '../../assets/icon-vertical-ellipsis.svg';
 import Button from '../Button/Button';
+import { useBoard } from '../../context/BoardContext';
+import { useParams } from 'react-router-dom';
 
 
-const CardModal = ({ task, onClose }) => {
+const CardModal = ({ task, onClose, columnID }) => {
+    const { id } = useParams();
     const { title, taskDescription, status, subtasks, _id } = task;
-    console.log(task)
+    const { deleteTask } = useBoard();
     const [menuVisible, setMenuVisible] = useState(false);
     const completedSubTasks = subtasks ? subtasks.filter((subTask) => subTask.isCompleted).length : 0;
     const numSubtasks = subtasks ? subtasks.length : 0;
@@ -14,7 +17,9 @@ const CardModal = ({ task, onClose }) => {
         setMenuVisible(!menuVisible);
     };
 
-    const handleDeleteTask = () => {
+    const handleDeleteTask = async () => {
+        console.log(id, columnID, _id)
+        await deleteTask(id, columnID, _id);
 
     };
 
@@ -27,7 +32,7 @@ const CardModal = ({ task, onClose }) => {
     };
 
     return (
-        <div id="card-modal" data-modal-id={_id} className={styles.cardModal}>
+        <div id="card-modal" data-task-id={_id} className={styles.cardModal}>
             <div className={styles.modalContent}>
                 <div className={styles.modalHeader}>
                     <h1 className={styles.modalTitle}>{title}</h1>
@@ -40,8 +45,8 @@ const CardModal = ({ task, onClose }) => {
                         />
                         {menuVisible && (
                             <div className={styles.menuContent}>
-                                <button onClick={handleEditTask}>Edit Task</button>
-                                <button onClick={handleDeleteTask}>Delete Task</button>
+                                <Button variant='editButton' onClick={handleEditTask}>Edit Task</Button>
+                                <Button variant='deleteButton' onClick={handleDeleteTask}>Delete Task</Button>
                             </div>
                         )}
                     </div>

@@ -2,8 +2,9 @@ import { useState } from 'react';
 import styles from './Card.module.css'
 import CardModal from '../Modal/CardModal';
 
-const Card = ({ task }) => {
+const Card = ({ task , columnID}) => {
     const { title, _id, subtasks } = task;
+
     const [modalVisible, setModalVisible] = useState(false);
     console.log(subtasks)
     const completedSubTasks = subtasks ? subtasks.filter((subTask) => subTask.isCompleted).length : 0;
@@ -19,6 +20,7 @@ const Card = ({ task }) => {
 
     return (
         <>
+
             <div
                 data-id={_id}
                 className={styles.card}
@@ -31,7 +33,7 @@ const Card = ({ task }) => {
                 <span className={styles.cardSubtasks}>{completedSubTasks} of {subtasks ? subtasks?.length : 0} subtasks</span>
                 {/* Assuming createDropZone() returns a React element */}
             </div>
-            {modalVisible && <CardModal task={task} onClose={() => setModalVisible(false)} />}
+            {modalVisible && <CardModal columnID={columnID} task={task} onClose={() => setModalVisible(false)} />}
         </>
     );
 };

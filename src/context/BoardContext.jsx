@@ -62,7 +62,7 @@ export const BoardProvider = ({ children }) => {
         } catch (err) {
             setError(err.message);
         } finally {
-         
+
         }
     };
 
@@ -129,7 +129,7 @@ export const BoardProvider = ({ children }) => {
 
     const deleteTask = async (boardId, columnId, taskId) => {
         try {
-            await fetch(`http://localhost:3000/api/boards/${boardId}/column/${columnId}/task/${taskId}`, {
+            await fetch(`http://localhost:3000/api/boards/${boardId}/tasks/column/${columnId}/task/${taskId}`, {
                 method: 'DELETE',
             });
 
@@ -156,7 +156,7 @@ export const BoardProvider = ({ children }) => {
 
     return (
         <BoardContext.Provider
-            value={{ boards, board, loading, error,removeBoard, setBoard, fetchBoards, fetchBoard, addBoard, addTask, updateTask, deleteTask }}
+            value={{ boards, board, loading, error, removeBoard, setBoard, fetchBoards, fetchBoard, addBoard, addTask, updateTask, deleteTask }}
         >
             {children}
         </BoardContext.Provider>
