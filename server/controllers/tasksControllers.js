@@ -52,22 +52,55 @@ export const createTask = async (req, res) => {
 
 export const updateTask = async (req, res) => {
     const { boardID, columnID, id } = req.params;
-    const task = req.body;
+    const { task, newColumnTitle } = req.body;
+
     if (!mongoose.Types.ObjectId.isValid(boardID)) {
         return res.status(404).send(`No board with id: ${boardID}`);
     }
+
     try {
         const boards = await TodoBoard.find();
         const board = boards.find(board => board._id.toString() === boardID.toString());
+        if (!board) {
+            return res.status(404).send(`No board with id: ${boardID}`);
+        }
+
         const column = board.columns.find(col => col._id.toString() === columnID.toString());
+        console.log(column)
+        if (!column) {
+            return res.status(404).send(`No column with id: ${columnID}`);
+        }
+
         const taskToUpdate = column.tasks.find(task => task._id.toString() === id.toString());
-        taskToUpdate.set(task);
+        if (!taskToUpdate) {
+            return res.status(404).send(`No task with id: ${id}`);
+        }
+
+        if (newColumnTitle) {
+            const newColumn = board.columns.find(col => col.title === newColumnTitle);
+            if (!newColumn) {
+                return res.status(404).send(`No column with title: ${newColumnTitle}`);
+            }
+
+            // Check if the task already exists in the new column
+            const duplicateTask = newColumn.tasks.find(t => t._id.toString() === id.toString());
+            if (duplicateTask) {
+                return res.status(409).json({ message: 'Task already exists in the new column' });
+            }
+
+            column.tasks.pull(taskToUpdate);
+            newColumn.tasks.push(taskToUpdate);
+        } else {
+            taskToUpdate.set(task);
+        }
+
         await board.save();
         res.status(200).json(taskToUpdate);
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        console.error(error);
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
 export const moveTask = async (req, res) => {
     const { boardID, columnID, id } = req.params;

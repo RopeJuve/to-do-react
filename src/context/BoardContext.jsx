@@ -61,8 +61,6 @@ export const BoardProvider = ({ children }) => {
             setLoading(false);
         } catch (err) {
             setError(err.message);
-        } finally {
-
         }
     };
 
@@ -106,7 +104,7 @@ export const BoardProvider = ({ children }) => {
 
             setBoard((prevBoard) => {
                 const updatedColumns = prevBoard.columns.map((column) => {
-                    if (column._id === columnId) {
+                    if (column._id === updateTask.status) {
                         return {
                             ...column,
                             tasks: column.tasks.map((task) =>
@@ -126,6 +124,39 @@ export const BoardProvider = ({ children }) => {
             setError(err.message);
         }
     };
+
+    const updateTaskAndMove = async (boardId, columnId, taskId, updatedTask) => {
+        try {
+            await fetch(`http://localhost:3000/api/boards/${boardId}/tasks/column/${columnId}/task/${taskId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedTask),
+            });
+
+            setBoard((prevBoard) => {
+                const updatedColumns = prevBoard.columns.map((column) => {
+                    if (column._id === columnId && updatedTask.task.status !== column.title) {
+                        return {
+                            ...column,
+                            tasks: column.tasks.filter((task) => task._id !== taskId),
+                        };
+                    } else if (column.title === updatedTask.newColumnTitle) {
+                        return {
+                            ...column,
+                            tasks: [...column.tasks, updatedTask.task],
+                        };
+                    }
+                });
+
+                return {
+                    ...prevBoard,
+                    columns: updatedColumns,
+                };
+            });
+        } catch (err) {
+            setError(err.message);
+        }
+    }
 
     const deleteTask = async (boardId, columnId, taskId) => {
         try {
@@ -156,7 +187,7 @@ export const BoardProvider = ({ children }) => {
 
     return (
         <BoardContext.Provider
-            value={{ boards, board, loading, error, removeBoard, setBoard, fetchBoards, fetchBoard, addBoard, addTask, updateTask, deleteTask }}
+            value={{ boards, board, loading, error, updateTaskAndMove, removeBoard, setBoard, fetchBoards, fetchBoard, addBoard, addTask, updateTask, deleteTask }}
         >
             {children}
         </BoardContext.Provider>

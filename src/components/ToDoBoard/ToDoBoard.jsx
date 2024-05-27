@@ -25,8 +25,8 @@ const ToDoBoard = () => {
     return (
         <>
             {board && boards?.length > 0 ? <div className={styles.columnContainer}>
-                {board.columns?.map((column) => (
-                    <Column key={column._id} column={column} columnID={column._id}/>))}
+                {board?.columns?.map((column) => (
+                    <Column key={column?._id} column={column} columnID={column?._id}/>))}
             </div> : <div className={styles.emptyContainer}>
                 <p>You haven't created board yet!!</p>
                 <Button variant="primary" onClick={() => setOpenModal(true)}>
