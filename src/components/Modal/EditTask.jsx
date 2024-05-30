@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './AddTaskModal.module.css'
 import Input from '../Input/Input';
 import Button from '../Button/Button';
@@ -6,20 +6,28 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useBoard } from '../../context/BoardContext';
 import deleteInput from '../../assets/icon-cross.svg'
 
-const EditTask = ({ task, columnID }) => {
-    const { id } = useParams();
+const EditTask = () => {
+    const { boardId, columnId, taskId } = useParams();
     const navigate = useNavigate();
-    const { updateTask, updateTaskAndMove } = useBoard();
+    const { updateTask, getTask, task, fetchBoard } = useBoard();
     const [numInputs, setNumInputs] = useState([]);
     const [subtasks, setSubtasks] = useState([]);
     const [formData, setFormData] = useState({
-        title: task.title || '',
-        taskDescription: task.taskDescription || '',
-        subtasks: task.subtasks || subtasks,
-        isCompleted: task.isCompleted || false,
-        status: task.status || ''
+        title: task?.title,
+        taskDescription: task?.taskDescription,
+        subtasks: task?.subtasks || subtasks,
+        isCompleted: false,
+        status: task?.status
     });
-    console.log(task, formData)
+
+    useEffect(() => {
+        getTask(boardId, columnId, taskId);
+        return () => {
+            fetchBoard(boardId);
+        }
+    }, [boardId, columnId, taskId])
+
+
     const handleInputChange = (e, index) => {
         const { name, value } = e.target;
         if (name === 'subtasks') {
@@ -35,12 +43,14 @@ const EditTask = ({ task, columnID }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData)
-        if(formData.status !== task.status){
-            await updateTaskAndMove(id, columnID, task._id, { task: formData, newColumnTitle: formData.status});
-            navigate(`/boards/${id}`);
+        if (formData.status !== task.status) {
+            await updateTask(boardId, columnId, task?._id, { task: formData, newColumnTitle: formData.status });
+            navigate(`/boards/${boardId}`);
+        } else {
+            await updateTask(boardId, columnId, task?._id, { task: formData });
+            navigate(`/boards/${boardId}`);
         }
-        await updateTask(id, columnID, task._id, formData);
-        navigate(`/boards/${id}`);
+
     }
 
     return (
@@ -48,24 +58,24 @@ const EditTask = ({ task, columnID }) => {
             <h1>Edit Task</h1>
             <div className={styles.content}>
                 <label htmlFor="title">Title</label>
-                <Input id='title' name='title' type='text' placeholder="Task title" onChange={handleInputChange} value={formData.title} />
+                <Input id='title' name='title' type='text' placeholder="Task title" onChange={handleInputChange} value={formData?.title} />
             </div>
             <div className={styles.content}>
                 <label htmlFor="taskDescription">Description</label>
-                <textarea value={formData.taskDescription} id='taskDescription' name='taskDescription' className={styles.textArea} rows="4" placeholder="e.g. It’s always good to take a break. This 15 minute break will  recharge the batteries a little." onChange={handleInputChange} />
+                <textarea value={formData?.taskDescription} id='taskDescription' name='taskDescription' className={styles.textArea} rows="4" placeholder="e.g. It’s always good to take a break. This 15 minute break will  recharge the batteries a little." onChange={handleInputChange} />
             </div>
             <div className={styles.content}>
                 <label htmlFor="title">Subtasks</label>
 
-                {task?.subtasks.map((subtask, index) => (
+                {task?.subtasks?.map((subtask, index) => (
                     <div className={styles.subtaskInput}>
-                        <Input key={subtask._id} id='subtasks' name='subtasks' type='text' placeholder="e.g. Take coffee break" value={formData.subtasks[index]?.subtaskDescription} onChange={(e) => handleInputChange(e, index)} />
+                        <Input key={subtask?._id} id='subtasks' name='subtasks' type='text' placeholder="e.g. Take coffee break" value={formData?.subtasks[index]?.subtaskDescription} onChange={(e) => handleInputChange(e, index)} />
                         <Button key={`btn-${subtask._id}`} type='button' variant="inActive" >
                             <img src={deleteInput} alt="delete subtask input" />
                         </Button>
                     </div>
                 ))}
-                 {numInputs.map((input, index) => (
+                {numInputs.map((input, index) => (
                     <div className={styles.subtaskInput}>
                         <Input key={input} id='subtasks' name='subtasks' type='text' placeholder="e.g. Take coffee break" onChange={(e) => handleInputChange(e, index)} />
                         <Button key={`btn-${input}`} type='button' variant="inActive" onClick={() => setNumInputs(prev => prev.filter(num => num !== input))
@@ -78,7 +88,7 @@ const EditTask = ({ task, columnID }) => {
             </div>
             <div className={styles.content}>
                 <span>Status</span>
-                <select selected name='status' className={styles.selectContainer} type='text' onChange={handleInputChange} value={formData.status}>
+                <select selected name='status' className={styles.selectContainer} type='text' onChange={handleInputChange} value={formData?.status}>
                     <option value='To Do'>To Do</option>
                     <option value='In Progress'>In Progress</option>
                     <option value='Done'>Done</option>

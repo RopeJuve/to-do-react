@@ -6,8 +6,9 @@ const BoardContext = createContext();
 export const useBoard = () => useContext(BoardContext);
 
 export const BoardProvider = ({ children }) => {
-    const [boards, setBoards] = useState(null);
-    const [board, setBoard] = useState(null);
+    const [boards, setBoards] = useState([]);
+    const [board, setBoard] = useState([]);
+    const [task, setTask] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -64,6 +65,16 @@ export const BoardProvider = ({ children }) => {
         }
     };
 
+    const getTask = async (boardId, columnId, taskId) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/boards/${boardId}/tasks/column/${columnId}/task/${taskId}`);
+            const data = await response.json();
+            setTask(data);
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
     const addTask = async (boardId, task) => {
         try {
             const response = await fetch(`http://localhost:3000/api/boards/${boardId}/tasks`, {
@@ -101,41 +112,19 @@ export const BoardProvider = ({ children }) => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updatedTask),
             });
-
+            const newTask = await response.json();
             setBoard((prevBoard) => {
                 const updatedColumns = prevBoard.columns.map((column) => {
-                    if (column._id === updateTask.status) {
+                    if (column.title === updateTask.task.status) {
                         return {
                             ...column,
                             tasks: column.tasks.map((task) =>
-                                task._id === taskId ? updatedTask : task
+                                task._id === taskId ? newTask : task
                             ),
                         };
                     }
-                    return column;
-                });
+                    else if (column?._id === columnId && updatedTask.task.status !== column.title) {
 
-                return {
-                    ...prevBoard,
-                    columns: updatedColumns,
-                };
-            });
-        } catch (err) {
-            setError(err.message);
-        }
-    };
-
-    const updateTaskAndMove = async (boardId, columnId, taskId, updatedTask) => {
-        try {
-            await fetch(`http://localhost:3000/api/boards/${boardId}/tasks/column/${columnId}/task/${taskId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedTask),
-            });
-
-            setBoard((prevBoard) => {
-                const updatedColumns = prevBoard.columns.map((column) => {
-                    if (column._id === columnId && updatedTask.task.status !== column.title) {
                         return {
                             ...column,
                             tasks: column.tasks.filter((task) => task._id !== taskId),
@@ -156,7 +145,8 @@ export const BoardProvider = ({ children }) => {
         } catch (err) {
             setError(err.message);
         }
-    }
+    };
+
 
     const deleteTask = async (boardId, columnId, taskId) => {
         try {
@@ -187,7 +177,7 @@ export const BoardProvider = ({ children }) => {
 
     return (
         <BoardContext.Provider
-            value={{ boards, board, loading, error, updateTaskAndMove, removeBoard, setBoard, fetchBoards, fetchBoard, addBoard, addTask, updateTask, deleteTask }}
+            value={{task,  boards, board, loading, error, getTask, removeBoard, setBoard, fetchBoards, fetchBoard, addBoard, addTask, updateTask, deleteTask }}
         >
             {children}
         </BoardContext.Provider>

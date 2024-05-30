@@ -34,7 +34,6 @@ const AddTaskModal = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
         await addTask(boardId, formData);
         navigate(`/boards/${boardId}`);
     }

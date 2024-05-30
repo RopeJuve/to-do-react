@@ -8,6 +8,7 @@
 
 .logoWrapper {
   width: 1.5rem;
+  cursor: pointer;
 
   & h1 {
     display: none;

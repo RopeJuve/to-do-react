@@ -4,13 +4,13 @@ import AddTaskModal from './AddTaskModal';
 import { useNavigate } from 'react-router-dom';
 import EditTask from './EditTask';
 
-const Modal = ({ remove, variant , task, columnID}) => {
+const Modal = ({ remove, variant }) => {
     const navigate = useNavigate();
     const handleModalClick = (e) => {
         e.stopPropagation();
     };
     const handleClick = () => {
-        if (variant === 'addTask') {
+        if (variant === 'addTask' || variant === 'editTask') {
             navigate(-1);
         } else {
             remove();
@@ -21,7 +21,7 @@ const Modal = ({ remove, variant , task, columnID}) => {
             <div className={styles.modal} onClick={handleModalClick}>
                 {variant === 'addBoard' && <AddBoardModal remove={remove} />}
                 {variant === 'addTask' && <AddTaskModal />}
-                {variant === 'editTask' && <EditTask task={task} columnID={columnID} />}
+                {variant === 'editTask' && <EditTask  />}
             </div>
         </div>
     )

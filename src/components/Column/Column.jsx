@@ -3,7 +3,6 @@ import Card from '../Card/Card';
 import styles from './Column.module.css'
 
 const Column = ({ column, columnID}) => {
-    const { title, tasks } = column;
 
     const bgColor = {
         'To Do': '#49C4E5',
@@ -13,11 +12,11 @@ const Column = ({ column, columnID}) => {
     return (
         <div className={styles.container}>
             <div className={styles.heading}>
-                <div className={styles.circle} style={{ backgroundColor: `${bgColor[title]}` }}></div>
-                <h3>{title}</h3>
+                <div className={styles.circle} style={{ backgroundColor: `${bgColor[column?.title]}` }}></div>
+                <h3>{column?.title}</h3>
             </div>
             <div className={styles.taskWrapper}>
-                {tasks.map((task) => (
+                {column?.tasks?.map((task) => (
                     <Card key={task._id} task={task} columnID={columnID}/>
                 ))}
             </div>

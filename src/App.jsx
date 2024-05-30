@@ -21,6 +21,7 @@ function App() {
       {state?.backgroundLocation && (
         <Routes>
           <Route path="/boards/:boardId/task" element={<Modal variant="addTask" />} />
+          <Route path="/boards/:boardId/column/:columnId/task/:taskId/edit-task" element={<Modal variant="editTask" />} />
         </Routes>
       )}
     </BoardProvider>

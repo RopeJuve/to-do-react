@@ -57,7 +57,6 @@ export const updateTask = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(boardID)) {
         return res.status(404).send(`No board with id: ${boardID}`);
     }
-
     try {
         const boards = await TodoBoard.find();
         const board = boards.find(board => board._id.toString() === boardID.toString());
@@ -66,7 +65,6 @@ export const updateTask = async (req, res) => {
         }
 
         const column = board.columns.find(col => col._id.toString() === columnID.toString());
-        console.log(column)
         if (!column) {
             return res.status(404).send(`No column with id: ${columnID}`);
         }
@@ -82,18 +80,16 @@ export const updateTask = async (req, res) => {
                 return res.status(404).send(`No column with title: ${newColumnTitle}`);
             }
 
-            // Check if the task already exists in the new column
             const duplicateTask = newColumn.tasks.find(t => t._id.toString() === id.toString());
             if (duplicateTask) {
                 return res.status(409).json({ message: 'Task already exists in the new column' });
             }
-
             column.tasks.pull(taskToUpdate);
             newColumn.tasks.push(taskToUpdate);
+            taskToUpdate.set(task);
         } else {
             taskToUpdate.set(task);
         }
-
         await board.save();
         res.status(200).json(taskToUpdate);
     } catch (error) {
