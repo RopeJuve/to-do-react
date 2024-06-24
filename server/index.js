@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import boardRouter from './routes/boardRouts.js';
 import cors from 'cors';
 import tasksRouter from './routes/taskRouts.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
@@ -19,7 +21,7 @@ app.get('/', (req, res) => {
 
 
 
-mongoose.connect('mongodb+srv://robertsterjov:8USfHEpLfkBBvFwF@todosdb.nnvoc7i.mongodb.net/Todo-API?retryWrites=true&w=majority&appName=TodosDb')
+mongoose.connect(process.env.MONGODB_URL)
     .then(() => {
         console.log('Connected to MongoDB');
         app.listen(3000, () => {
